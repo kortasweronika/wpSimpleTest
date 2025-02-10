@@ -56,10 +56,10 @@ public class WpPlNextPageTest {
     @FindBy(xpath = "//button[contains(text(),'Accept all cookies')]")
     private WebElement allCookiesButton ;
 
-    @FindBy(linkText = "Tags")
+    @FindBy(xpath = "//li[contains(concat(' ', normalize-space(@class), ' '), ' ps-relative ')]/a[contains(concat(' ', normalize-space(@class), ' '), ' s-block-link ') and contains(concat(' ', normalize-space(@class), ' '), ' pl8 ') and contains(concat(' ', normalize-space(@class), ' '), ' js-gps-track ') and contains(concat(' ', normalize-space(@class), ' '), ' nav-links--link ') and contains(concat(' ', normalize-space(@class), ' '), ' -link__with-icon ') and @href='/tags']")
     private WebElement tagLink;
 
-    @FindBy(linkText = "Users")
+    @FindBy(xpath = "//li[contains(concat(' ', normalize-space(@class), ' '), ' ps-relative ')]/a[contains(concat(' ', normalize-space(@class), ' '), ' s-block-link ') and contains(concat(' ', normalize-space(@class), ' '), ' pl8 ') and contains(concat(' ', normalize-space(@class), ' '), ' js-gps-track ') and contains(concat(' ', normalize-space(@class), ' '), ' nav-links--link ') and contains(concat(' ', normalize-space(@class), ' '), ' -link__with-icon ') and @href='/users']")
     private WebElement usersLink;
 
     @FindBy(css = "a[href='/questions/ask']")
