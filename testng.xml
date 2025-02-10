@@ -1,0 +1,6 @@
+<test name="Test">
+     <parameter name="ref" value="Tags"/>
+      <classes>
+        <class name="tests.WpPlNextPageTest" />
+      </classes>
+</test>
