@@ -38,7 +38,7 @@ public class WpPlNextPageTest {
 
         driver.get("https://stackoverflow.com");
         try {
-            Thread.sleep(100);
+            Thread.sleep(700);
             acceptAllCookies();
 
             if (ref.equals("Tags")) {
