@@ -16,27 +16,19 @@ public class WpPlNextPageTest {
 
         try {
             // Navigate to the wp.pl website
-            driver.get("https://www.wp.pl");
+            driver.get("https://stackoverflow.com/");
 
             // Wait for the page to load completely
             Thread.sleep(5000);  // Adjust the wait time as needed
-
+            WebElement button = driver.findElement(By.xpath("//button[contains(text(),'Accept all cookies')]"));
+            button.click();
+            Thread.sleep(5000);
             // Find the element for the next page (e.g., a navigation link or button)
-            WebElement nextPageLink = driver.findElement(By.xpath("//a[contains(text(), 'Next')]"));
-
-            // Click the next page link
-            nextPageLink.click();
+            driver.findElement(By.linkText("Tags")).click();
 
             // Wait for the next page to load completely
             Thread.sleep(5000);  // Adjust the wait time as needed
 
-            // Verify that the next page has loaded (this is a placeholder, adjust as needed)
-            WebElement someElementOnNextPage = driver.findElement(By.id("someElementId"));
-            if (someElementOnNextPage.isDisplayed()) {
-                System.out.println("Next page loaded successfully.");
-            } else {
-                System.out.println("Failed to load the next page.");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
