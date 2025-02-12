@@ -28,8 +28,8 @@ public class WpPlNextPageTest {
     }
 
     @Test
-    @Parameters("ref")
-    public void nextPage(String ref) {
+    @Parameters("linkName")
+    public void nextPage(String linkName) {
         init();
 
         driver.get("https://stackoverflow.com");
@@ -37,7 +37,7 @@ public class WpPlNextPageTest {
             Thread.sleep(700);
             acceptAllCookies();
 
-            if (ref.equals("Tags")) {
+            if (linkName.equals("Tags")) {
                 tagLinkClick();
             } else {
                 usersLinkClick();

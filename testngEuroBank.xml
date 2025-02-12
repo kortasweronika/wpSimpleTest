@@ -13,7 +13,7 @@
 <!--        </classes>-->
 <!--    </test>-->
     <test name="WpPlNextPageTest">
-        <parameter name="ref" value="Tags"></parameter>
+        <parameter name="linkName" value="Tags"></parameter>
         <classes>
             <class name="tests.WpPlNextPageTest" />
         </classes>
