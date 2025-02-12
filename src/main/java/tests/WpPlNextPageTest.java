@@ -6,26 +6,23 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 public class WpPlNextPageTest {
-
-
 
     private WebDriver driver;
     private boolean init = true;
 
-    public WpPlNextPageTest(){}
-
-    public WpPlNextPageTest(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-    }
-
-    @BeforeTest
     private void init() {
         if (init) {
+            System.setProperty("webdriver.chrome.driver", "/Users/b2b/Documents/tools");
+//            driver = TestFactoryUtils.getDriver("chromeDriver", ChromeDriver.class);
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
+            PageFactory.initElements(driver, this);
             init = false;
         }
     }
@@ -34,7 +31,6 @@ public class WpPlNextPageTest {
     @Parameters("ref")
     public void nextPage(@Optional("Tags") String ref) {
         init();
-        PageFactory.initElements(driver, this);
 
         driver.get("https://stackoverflow.com");
         try {

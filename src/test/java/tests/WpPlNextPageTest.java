@@ -1,90 +1,76 @@
-//package tests;
-//
-//import io.github.bonigarcia.wdm.WebDriverManager;
-//import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.chrome.ChromeDriver;
-//import org.openqa.selenium.support.FindBy;
-//import org.openqa.selenium.support.PageFactory;
-//import org.testng.annotations.BeforeTest;
-//import org.testng.annotations.Optional;
-//import org.testng.annotations.Parameters;
-//import org.testng.annotations.Test;
-//import org.testng.annotations.AfterTest;
-//
-//public class WpPlNextPageTest {
-//
-//
-//
-//    private WebDriver driver;
-//    private boolean init = true;
-//
-//    public WpPlNextPageTest(){}
-//
-//    public WpPlNextPageTest(WebDriver driver) {
-//        PageFactory.initElements(driver, this);
-//    }
-//
-//    @BeforeTest
-//    private void init() {
-//        if (init) {
-//            WebDriverManager.chromedriver().setup();
-//            driver = new ChromeDriver();
-//            init = false;
-//        }
-//    }
-//
-//    @Test
-//    @Parameters("ref")
-//    public void nextPage(@Optional("Tags") String ref) {
-//        init();
-//        PageFactory.initElements(driver, this);
-//
-//        driver.get("https://stackoverflow.com");
-//        try {
-//            Thread.sleep(700);
-//            acceptAllCookies();
-//
-//            if (ref.equals("Tags")) {
-//                tagLinkClick();
-//            } else {
-//                usersLinkClick();
-//            }
-//        } catch (InterruptedException ignored) {}
-//        finally {
-//            driver.quit();
-//        }
-//
-//    }
-//
-//    @FindBy(xpath = "//button[contains(text(),'Accept all cookies')]")
-//    private WebElement allCookiesButton ;
-//
-//    @FindBy(xpath = "//li[contains(concat(' ', normalize-space(@class), ' '), ' ps-relative ')]/a[contains(concat(' ', normalize-space(@class), ' '), ' s-block-link ') and contains(concat(' ', normalize-space(@class), ' '), ' pl8 ') and contains(concat(' ', normalize-space(@class), ' '), ' js-gps-track ') and contains(concat(' ', normalize-space(@class), ' '), ' nav-links--link ') and contains(concat(' ', normalize-space(@class), ' '), ' -link__with-icon ') and @href='/tags']")
-//    private WebElement tagLink;
-//
-//    @FindBy(xpath = "//li[contains(concat(' ', normalize-space(@class), ' '), ' ps-relative ')]/a[contains(concat(' ', normalize-space(@class), ' '), ' s-block-link ') and contains(concat(' ', normalize-space(@class), ' '), ' pl8 ') and contains(concat(' ', normalize-space(@class), ' '), ' js-gps-track ') and contains(concat(' ', normalize-space(@class), ' '), ' nav-links--link ') and contains(concat(' ', normalize-space(@class), ' '), ' -link__with-icon ') and @href='/users']")
-//    private WebElement usersLink;
-//
-//    @FindBy(css = "a[href='/questions/ask']")
-//    private WebElement askLink;
-//
-//    private void acceptAllCookies(){
-//        allCookiesButton.click();
-//    }
-//
-//    private void tagLinkClick(){
-//        tagLink.click();
-//    }
-//
-//    private void usersLinkClick(){
-//        usersLink.click();
-//    }
-//
-//    @AfterTest
-//    public void tearDown() {
-//        driver.quit();
-//    }
-//
-//
-//}
+package tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.testng.annotations.Test;
+
+public class WpPlNextPageTest {
+
+    @Test
+    public void testNextPage() {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Navigate to the wp.pl website
+            driver.get("https://stackoverflow.com/");
+
+            // Wait for the page to load completely
+            Thread.sleep(5000);  // Adjust the wait time as needed
+            WebElement button = driver.findElement(By.xpath("//button[contains(text(),'Accept all cookies')]"));
+            button.click();
+            Thread.sleep(5000);
+            // Find the element for the next page (e.g., a navigation link or button)
+            driver.findElement(By.linkText("Tags")).click();
+
+            // Wait for the next page to load completely
+            Thread.sleep(5000);  // Adjust the wait time as needed
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the browser
+            driver.quit();
+        }
+    }
+    public static void main(String[] args) {
+        // Set the path to the chromedriver executable
+
+
+        // Initialize a new instance of the Chrome driver
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Navigate to the wp.pl website
+            driver.get("https://www.wp.pl");
+
+            // Wait for the page to load completely
+            Thread.sleep(5000);  // Adjust the wait time as needed
+
+            // Find the element for the next page (e.g., a navigation link or button)
+            WebElement nextPageLink = driver.findElement(By.xpath("//a[contains(text(), 'Next')]"));
+
+            // Click the next page link
+            nextPageLink.click();
+
+            // Wait for the next page to load completely
+            Thread.sleep(5000);  // Adjust the wait time as needed
+
+            // Verify that the next page has loaded (this is a placeholder, adjust as needed)
+            WebElement someElementOnNextPage = driver.findElement(By.id("someElementId"));
+            if (someElementOnNextPage.isDisplayed()) {
+                System.out.println("Next page loaded successfully.");
+            } else {
+                System.out.println("Failed to load the next page.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the browser
+            driver.quit();
+        }
+    }
+}
