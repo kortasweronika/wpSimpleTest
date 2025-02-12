@@ -29,7 +29,7 @@ public class WpPlNextPageTest {
 
     @Test
     @Parameters("ref")
-    public void nextPage(@Optional("Tags") String ref) {
+    public void nextPage(String ref) {
         init();
 
         driver.get("https://stackoverflow.com");
