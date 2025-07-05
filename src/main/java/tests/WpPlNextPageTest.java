@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
@@ -18,10 +19,13 @@ public class WpPlNextPageTest {
 
     private void init() {
         if (init) {
-            System.setProperty("webdriver.chrome.driver", "/Users/b2b/Documents/tools");
-//            driver = TestFactoryUtils.getDriver("chromeDriver", ChromeDriver.class);
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            System.setProperty("webdriver.chrome.driver", "/Users/b2b/Documents/chromedriver-mac-arm64/chromedriver");
+            try {
+                driver = new ChromeDriver();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             PageFactory.initElements(driver, this);
             init = false;
         }
