@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="RedditTestSuite">
+    <test name="Search for Grid">
+        <parameter name="query1" value="Grid3"/>
+        <parameter name="query2" value="tooltip"/>
+        <parameter name="query" value="Grid2"/>
+        <classes>
+            <class name="tests.RedditSearchTest"/>
+        </classes>
+    </test>
+</suite>
