@@ -33,6 +33,7 @@ public class DemoqaWebTablesTestNG extends BaseTestPerClass {
   public void step1_addRecord_generatesEmail(@Optional("default@wp.pl") String email) {
     driver.get(baseUrl + "/webtables");
     closeFixedBannerIfPresent();
+    this.email = email;
 
     // otwórz modal
     wait.until(ExpectedConditions.elementToBeClickable(By.id("addNewRecordButton"))).click();
@@ -67,8 +68,9 @@ public class DemoqaWebTablesTestNG extends BaseTestPerClass {
             "Nowy rekord nie pojawił się w tabeli");
   }
 
-  @Test
+  @Test(dependsOnMethods = "step1_addRecord_generatesEmail")
   public void step2_search_usesEmailFromStep1() {
+
     // KLUCZ: nie przeładowujemy strony; pracujemy w tej samej sesji i tym samym DOM-ie
     WebElement search = wait.until(ExpectedConditions.elementToBeClickable(By.id("searchBox")));
     search.clear();
