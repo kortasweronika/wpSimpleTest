@@ -29,8 +29,8 @@ public class DemoqaWebTablesTestNG extends BaseTestPerClass {
   }
 
   @Test
-  @Parameters({"email:email@wp.pl"})
-  public void step1_addRecord_generatesEmail() {
+  @Parameters({"email"})
+  public void step1_addRecord_generatesEmail(@Optional("default@wp.pl") String email) {
     driver.get(baseUrl + "/webtables");
     closeFixedBannerIfPresent();
 
