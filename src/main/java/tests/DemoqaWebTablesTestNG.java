@@ -68,7 +68,7 @@ public class DemoqaWebTablesTestNG extends BaseTestPerClass {
             "Nowy rekord nie pojawił się w tabeli");
   }
 
-  @Test(dependsOnMethods = "step1_addRecord_generatesEmail")
+  @Test
   public void step2_search_usesEmailFromStep1() {
 
     // KLUCZ: nie przeładowujemy strony; pracujemy w tej samej sesji i tym samym DOM-ie
