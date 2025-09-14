@@ -2,6 +2,7 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -22,8 +23,16 @@ public class BaseTestPerClass {
       e.printStackTrace();
     }
 
-    driver.manage().window().maximize();
-    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    ChromeOptions opt = new ChromeOptions();
+    opt.setAcceptInsecureCerts(true);
+    opt.addArguments(
+            "--ignore-certificate-errors",
+            "--allow-insecure-localhost",
+            "--disable-features=BlockInsecurePrivateNetworkRequests"
+    );
+    driver = new ChromeDriver(opt);
+    driver.manage().timeouts().pageLoadTimeout(java.time.Duration.ofSeconds(60));
+    wait = new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(15));
     PageFactory.initElements(driver, this);
   }
 
