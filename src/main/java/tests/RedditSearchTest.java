@@ -14,7 +14,7 @@ import org.apache.commons.io.FileUtils;
 public class RedditSearchTest extends BaseTest {
 
     @Test
-    @Parameters({"query1", "query2"})
+    @Parameters({"query1"})
     public void searchMultipleQueries(@Optional("Grid") String query1) {
         driver.get("https://vaadin.com");
 
