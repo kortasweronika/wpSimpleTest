@@ -14,8 +14,8 @@ import org.apache.commons.io.FileUtils;
 public class RedditSearchTest extends BaseTest {
 
     @Test
-    @Parameters({"query1"})
-    public void searchMultipleQueries(@Optional("Grid") String query1) {
+    @Parameters({"query1", "query2"})
+    public void searchMultipleQueries(@Optional("Grid") String query1, @Optional("tooltip") String query2) {
         driver.get("https://vaadin.com");
 
         // Kliknij przycisk "Docs"
@@ -46,7 +46,7 @@ public class RedditSearchTest extends BaseTest {
         searchInput.sendKeys(Keys.ESCAPE);
 
         // Szukaj drugiego zapytania
-//        performSearchAndPrintResults(query2);
+        performSearchAndPrintResults(query2);
 
         // Ostatni krok: wpisz specjalną frazę
         searchInput.sendKeys(Keys.ESCAPE);
