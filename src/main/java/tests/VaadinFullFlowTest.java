@@ -2,8 +2,9 @@ package tests;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import tests.BaseTest;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +14,21 @@ import java.util.*;
 public class VaadinFullFlowTest extends BaseTest {
 
     @Test
-    public void fullComponentSearchAndScreenshotFlow() throws IOException, InterruptedException {
-        driver.get("https://vaadin.com");
+    @Parameters({"baseUrl", "outputPrefix", "seed"})
+    public void fullComponentSearchAndScreenshotFlow(
+            @Optional("https://vaadin.com") String baseUrl,
+            @Optional("suite1") String outputPrefix,
+            @Optional("0") String seedParam
+    ) throws IOException, InterruptedException {
+
+        // Deterministyczna losowość per suite (jeśli seed=0 → bieżący czas)
+        long seed = 0L;
+        try { seed = Long.parseLong(seedParam); } catch (Exception ignore) {}
+        if (seed == 0L) seed = System.currentTimeMillis();
+        Random rnd = new Random(seed);
+        System.out.println("▶ Running with seed=" + seed + ", prefix=" + outputPrefix);
+
+        driver.get(baseUrl);
 
         // Kliknij "Docs"
         WebElement docsLink = wait.until(ExpectedConditions.elementToBeClickable(
@@ -37,24 +51,24 @@ public class VaadinFullFlowTest extends BaseTest {
         componentsLink.click();
 
         // Poczekaj na menu
-        WebElement menuList = wait.until(ExpectedConditions.presenceOfElementLocated(
+        wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector("ul._menu_1jzdj_88")));
 
         // Pobierz <a> z menu komponentów
         List<WebElement> listItems = driver.findElements(By.cssSelector("ul._menu_1jzdj_88 li._menuItem_1jzdj_96 a"));
         List<String> componentNames = new ArrayList<>();
-
         for (WebElement link : listItems) {
             String text = link.getText().trim();
-            if (!text.isEmpty()) {
-                componentNames.add(text);
-            }
+            if (!text.isEmpty()) componentNames.add(text);
         }
 
-        // Zapisz do pliku
-        Path outputPath = Paths.get("components_list.txt");
+        // Katalog i pliki wyjściowe per suite
+        Path outDir = Paths.get("target", "vaadin-flow", outputPrefix);
+        Files.createDirectories(outDir);
+
+        Path outputPath = outDir.resolve("components_list.txt");
         Files.write(outputPath, componentNames, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        System.out.println("📄 Zapisano " + componentNames.size() + " komponentów do pliku components_list.txt");
+        System.out.println("📄 Zapisano " + componentNames.size() + " komponentów do " + outputPath);
 
         // Wybierz losowy komponent z pliku
         List<String> lines = Files.readAllLines(outputPath);
@@ -62,7 +76,7 @@ public class VaadinFullFlowTest extends BaseTest {
             System.out.println("⚠️ Plik z komponentami jest pusty.");
             return;
         }
-        String randomComponent = lines.get(new Random().nextInt(lines.size()));
+        String randomComponent = lines.get(rnd.nextInt(lines.size()));
         System.out.println("🎯 Wylosowano komponent: " + randomComponent);
 
         // Kliknij ikonę wyszukiwania
@@ -95,8 +109,8 @@ public class VaadinFullFlowTest extends BaseTest {
             }
         }
 
-        // Kliknij losowy wynik
-        WebElement randomResult = results.get(new Random().nextInt(results.size()));
+        // Kliknij losowy wynik (też deterministycznie)
+        WebElement randomResult = results.get(rnd.nextInt(results.size()));
         WebElement linkToClick = randomResult.findElement(By.cssSelector("a"));
         String destinationUrl = linkToClick.getAttribute("href");
         String articleTitle = randomResult.findElement(By.cssSelector("div[class*='Title']")).getText();
@@ -104,13 +118,13 @@ public class VaadinFullFlowTest extends BaseTest {
         linkToClick.click();
 
         // Poczekaj na załadowanie docelowej strony
-        Thread.sleep(3000); // Zabezpieczenie, można podmienić na wait z ExpectedConditions.titleContains
+        Thread.sleep(3000);
 
         // Screenshot
         TakesScreenshot screenshotTaker = (TakesScreenshot) driver;
         File srcFile = screenshotTaker.getScreenshotAs(OutputType.FILE);
-        File destFile = new File("component_screenshot.png");
+        File destFile = outDir.resolve("component_screenshot.png").toFile();
         Files.copy(srcFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("📸 Zapisano zrzut ekranu jako component_screenshot.png");
+        System.out.println("📸 Zapisano zrzut ekranu do " + destFile.getAbsolutePath());
     }
 }

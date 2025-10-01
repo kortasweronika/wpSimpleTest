@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="VaadinSuite-A">
+    <parameter name="baseUrl" value="https://vaadin.com"/>
+    <parameter name="outputPrefix" value="suiteA"/>
+    <parameter name="seed" value="42"/>
+    <test name="Vaadin-Flow-A">
+        <classes>
+            <class name="tests.VaadinFullFlowTest"/>
+        </classes>
+    </test>
+</suite>
