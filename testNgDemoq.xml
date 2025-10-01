@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Demoqa suite" verbose="1" parallel="false" thread-count="1">
+    <!-- globalne parametry dla testów -->
+    <parameter name="baseUrl" value="https://demoqa.com"/>
+    <parameter name="emailDomain" value="example.com"/>
+    <parameter name="firstName" value="Jan"/>
+    <parameter name="lastName" value="Test"/>
+    <parameter name="age" value="33"/>
+    <parameter name="salary" value="5000"/>
+    <parameter name="department" value="QA"/>
+
+    <test name="WebTablesFlow">
+        <classes>
+            <class name="tests.DemoqaWebTablesTestNG"/>
+        </classes>
+    </test>
+</suite>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="VaadinTechnologiesTest">
+<suite name="VaadinTechnologiesTest" verbose="1" parallel="false" thread-count="1">
 <test name="Search for Grid">
     <parameter name="query1" value="Grid"/>
     <parameter name="query2" value="tooltip"/>
