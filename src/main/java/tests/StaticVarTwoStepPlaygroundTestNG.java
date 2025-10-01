@@ -16,6 +16,7 @@ public class StaticVarTwoStepPlaygroundTestNG extends BaseTestPerClass {
     Assert.assertNotNull(label);
   }
 
+
   @Test
   public void t2_apply() {
     if (label == null) throw new SkipException("no label");
