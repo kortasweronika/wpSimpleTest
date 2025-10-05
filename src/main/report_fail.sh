@@ -1,25 +1,18 @@
-#!/usr/bin/env perl
-use strict;
-use warnings;
-use utf8;            # dla polskich znaków w tekście
-use open ':std', ':encoding(UTF-8)';
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Sprawdzenie parametru
-my $uuid = shift @ARGV
-  or die "Użycie: perl report.pl <UUID>\n";
+UUID="${1-}"
 
-# (opcjonalnie) prosta walidacja formatu UUID v4/v5 (8-4-4-4-12 heksów)
-die "Błędny format UUID: $uuid\n"
-  unless $uuid =~ /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+if [[ -z "$UUID" ]]; then
+  echo "Użycie: bash report.sh <UUID>" >&2
+  exit 1
+fi
 
-print "Hello world\n";
+echo "Hello world"
 
-my $filename = "${uuid}_report.csv";
-open my $fh, '>:encoding(UTF-8)', $filename
-  or die "Nie mogę utworzyć pliku '$filename': $!";
+FILENAME="${UUID}_report.csv"
 
-# Dokładnie taki wiersz, z podstawionym UUID
-print {$fh} "${uuid}|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n";
-close $fh or die "Błąd zapisu do pliku '$filename': $!";
+# Zapisz dokładnie jedną linię w żądanym formacie i stałych datach
+printf "%s|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n" "$UUID" > "$FILENAME"
 
-print "Utworzono plik: $filename\n";
+echo "Utworzono plik: $FILENAME"
