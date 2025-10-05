@@ -14,7 +14,7 @@ die "Błędny format UUID: $uuid\n"
 
 print "Hello world\n";
 
-my $filename = "id_${uuid}_reports.csv";
+my $filename = "${uuid}_report.csv";
 open my $fh, '>:encoding(UTF-8)', $filename
   or die "Nie mogę utworzyć pliku '$filename': $!";
 

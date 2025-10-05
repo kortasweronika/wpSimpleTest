@@ -16,7 +16,7 @@ fi
 
 echo "Hello world"
 
-FILENAME="id_${UUID}_reports.csv"
+FILENAME="${UUID}_report.csv"
 
 # Zapisz dokładnie jedną linię w żądanym formacie i stałych datach
 printf "id_%s|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|PASS\n" "$UUID" > "$FILENAME"
