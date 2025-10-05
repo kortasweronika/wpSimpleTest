@@ -14,12 +14,12 @@ die "Błędny format UUID: $uuid\n"
 
 print "Hello world\n";
 
-my $filename = "id_${uuid}_report.csv";
+my $filename = "${uuid}_report.csv";
 open my $fh, '>:encoding(UTF-8)', $filename
   or die "Nie mogę utworzyć pliku '$filename': $!";
 
 # Dokładnie taki wiersz, z podstawionym UUID
-print {$fh} "id_${uuid}|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n";
+print {$fh} "${uuid}|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n";
 close $fh or die "Błąd zapisu do pliku '$filename': $!";
 
 print "Utworzono plik: $filename\n";
