@@ -29,10 +29,6 @@ public class TestNgClasspathCheck {
         Assert.assertEquals(locCore, locAnno, "Core and annotations must come from the same location");
     }
 
-    import org.testng.Assert;
-import org.testng.internal.Version;
-// ...
-
     @Test
     public void extractAndSearchComponent() throws IOException, InterruptedException {
         // --- DIAGNOSTYKA TestNG: ma być dokładnie 1 kopia na classpath ---
