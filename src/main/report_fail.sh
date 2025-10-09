@@ -2,17 +2,33 @@
 set -euo pipefail
 
 UUID="${1-}"
+: "${UUID:?Użycie: bash report.sh <UUID>}"
 
-if [[ -z "$UUID" ]]; then
-  echo "Użycie: bash report.sh <UUID>" >&2
-  exit 1
-fi
+# Gdzie pisać (ENV przychodzi od executora). Fallback gdyby go nie było.
+REPORT_DIR_PATH="${REPORT_DIR:-"./Test Results/$UUID/Report"}"
+mkdir -p "$REPORT_DIR_PATH"
 
 echo "Hello world"
 
-FILENAME="${UUID}_report.csv"
+# --- GLOBALNY RAPORT PASS/FAIL (jedyna prawda w tym trybie) ---
+# Uwaga: w kolumnie 'id' używamy UUID (executor zmapuje to na STEP_UID).
+printf "%s|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n" \
+  "$UUID" > "$REPORT_DIR_PATH/${UUID}_report.csv"
 
-# Zapisz dokładnie jedną linię w żądanym formacie i stałych datach
-printf "%s|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:42|FAIL\n" "$UUID" > "$FILENAME"
+# --- OUTPUT (key|value) – opcjonalny, ale przydatny ---
+cat > "$REPORT_DIR_PATH/${UUID}_output.csv" <<EOF
+run_id|$UUID
+hello|world
+now|$(date -Iseconds)
+result|FAIL
+EOF
 
-echo "Utworzono plik: $FILENAME"
+# --- Strumienie (opcjonalne „legacy”, executor też je przeniesie) ---
+echo "Hello world" > "$REPORT_DIR_PATH/${UUID}_stdout.txt"
+# jeśli chcesz coś do stderr:
+# echo "jakiś błąd" > "$REPORT_DIR_PATH/${UUID}_stderr.txt"
+
+echo "Utworzono: "
+echo "  $REPORT_DIR_PATH/${UUID}_report.csv"
+echo "  $REPORT_DIR_PATH/${UUID}_output.csv"
+echo "  $REPORT_DIR_PATH/${UUID}_stdout.txt"
