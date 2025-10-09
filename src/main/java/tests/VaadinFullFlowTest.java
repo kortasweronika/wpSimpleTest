@@ -14,7 +14,7 @@ import java.util.*;
 public class VaadinFullFlowTest extends BaseTest {
 
     @Test
-    @Parameters({"baseUrl", "outputPrefix", "seed"})
+    @Parameters({"baseUrl", "outputPrefix", "seedParam"})
     public void fullComponentSearchAndScreenshotFlow(
             @Optional("https://vaadin.com") String baseUrl,
             @Optional("suite1") String outputPrefix,
