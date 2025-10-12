@@ -1,10 +1,13 @@
 package tests;
 
+import com.microsoft.playwright.Page;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Reporter;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pl.b2b.testfactory.testrunner.TestNgRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +66,7 @@ public class VaadinFullFlowTest extends BaseTest {
         }
 
         // Katalog i pliki wyjściowe per suite
-        Path outDir = Paths.get("target", "vaadin-flow", outputPrefix);
+        Path outDir = Path.of(TestNgRunner.getCurrentWorkDir());
         Files.createDirectories(outDir);
 
         Path outputPath = outDir.resolve("components_list.txt");
