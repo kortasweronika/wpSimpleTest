@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,6 +72,11 @@ public class DemoqaWebTablesTestNG extends BaseTestPerClass {
     });
     Assert.assertTrue(driver.findElement(By.cssSelector(".rt-table")).getText().contains(email));
     Files.writeString(stateFile, om.writeValueAsString(Map.of("email", email)));
+
+    byte[] shot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    Files.write(Path.of("last.png"), shot);
+
+
   }
 
   @Test

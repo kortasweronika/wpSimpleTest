@@ -3,11 +3,13 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.time.Duration;
 
 public class BaseTestPerClass {
@@ -16,18 +18,27 @@ public class BaseTestPerClass {
 
   @BeforeClass(alwaysRun = true)
   public void setUpClass() {
-    System.setProperty("webdriver.chrome.driver",
-            "/Users/b2b/Documents/chromedriver-mac-arm64/chromedriver");
-
+    // NIE ustawiaj webdriver.chrome.driver – niech Selenium Manager dobierze wersję
     ChromeOptions opt = new ChromeOptions();
     opt.setAcceptInsecureCerts(true);
     opt.addArguments(
+            "--headless=new",
+            "--disable-gpu",
+            "--no-first-run",
+            "--no-default-browser-check",
             "--ignore-certificate-errors",
             "--allow-insecure-localhost",
             "--disable-features=BlockInsecurePrivateNetworkRequests"
     );
 
-    driver = new ChromeDriver(opt);
+    String work = System.getProperty("testfactory.workdir",
+            System.getProperty("java.io.tmpdir"));
+    ChromeDriverService service = new ChromeDriverService.Builder()
+            .withVerbose(true)
+            .withLogFile(new File(work, "chromedriver.log"))
+            .build();
+
+    driver = new ChromeDriver(service, opt);
     driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
     wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     PageFactory.initElements(driver, this);

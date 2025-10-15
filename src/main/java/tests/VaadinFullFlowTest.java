@@ -57,7 +57,7 @@ public class VaadinFullFlowTest extends BaseTest {
         wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector("ul._menu_1jzdj_88")));
 
-        // Pobierz <a> z menu komponentów
+        // Pobierz <a> z menu komponentówb
         List<WebElement> listItems = driver.findElements(By.cssSelector("ul._menu_1jzdj_88 li._menuItem_1jzdj_96 a"));
         List<String> componentNames = new ArrayList<>();
         for (WebElement link : listItems) {
