@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- Parametry ---
 UUID="${1-}"
-: "${UUID:?Użycie: bash report.sh <UUID>}"
+: "${UUID:?Użycie: bash report.sh <UUID> [BYE]  # np. bash report.sh 123e4567 'do zobaczenia'}"
 
-# Gdzie pisać (ENV przychodzi od executora). Fallback gdyby go nie było.
+BYE="${2-bye}"
+
 REPORT_DIR_PATH="${REPORT_DIR:-"./Test Results/$UUID/Report"}"
 mkdir -p "$REPORT_DIR_PATH"
 
@@ -16,13 +18,17 @@ printf "%s|Parametry przekazane poprawnie|2025-10-01 17:06:42|2025-10-01 17:06:4
   "$UUID" > "$REPORT_DIR_PATH/${UUID}_report.csv"
 
 # --- OUTPUT (key|value) – opcjonalny, ale przydatny ---
+# Teraz faktycznie używamy parametru BYE.
 cat > "$REPORT_DIR_PATH/${UUID}_output.csv" <<EOF
+uuid|$UUID
+bye|$BYE
 EOF
 
 # --- Strumienie (opcjonalne „legacy”, executor też je przeniesie) ---
-echo "Hello world" > "$REPORT_DIR_PATH/${UUID}_stdout.txt"
-# jeśli chcesz coś do stderr:
-# echo "jakiś błąd" > "$REPORT_DIR_PATH/${UUID}_stderr.txt"
+{
+  echo "Hello world"
+  echo "Bye param: $BYE"
+} > "$REPORT_DIR_PATH/${UUID}_stdout.txt"
 
 echo "Utworzono: "
 echo "  $REPORT_DIR_PATH/${UUID}_report.csv"
