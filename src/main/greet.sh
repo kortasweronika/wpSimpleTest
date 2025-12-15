@@ -11,7 +11,7 @@ EOF
 
 # 1) WYMAGANY pierwszy argument: UID wykonania
 if [[ $# -lt 1 || "$1" == -* ]]; then
-  echo "Błąd: pierwszy argument musi być EXECUTION_UID."; usage; exit 2
+  echo "Błąd: pierwszy argument musi być EXECUTION_UID "; usage; exit 2
 fi
 EXECUTION_UID="$1"
 shift
