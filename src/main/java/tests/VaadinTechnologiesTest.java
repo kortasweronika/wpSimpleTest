@@ -18,7 +18,7 @@ public class VaadinTechnologiesTest extends BaseTest {
     private static final String SCREENSHOT_FILE = "component_result.png";
 
     @Test
-    public void extractAndSearchComponent() throws IOException, InterruptedException {
+    public void extractAndSearchComponentPlusScreenshot() throws IOException, InterruptedException {
         driver.get("https://vaadin.com");
 
         // 🔹 Kliknij w „Docs”
