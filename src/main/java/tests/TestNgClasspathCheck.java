@@ -10,6 +10,8 @@ import java.util.List;
 
 public class TestNgClasspathCheck {
 
+    @Test
+    public void do2Nothing() {}
 
     @Test
     public void doNothing() {}
