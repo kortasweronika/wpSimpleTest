@@ -10,6 +10,10 @@ import java.util.List;
 
 public class TestNgClasspathCheck {
 
+
+    @Test
+    public void doNothing() {}
+
     @Test
     public void onlyOneTestNgOnClasspath() throws Exception {
         int count = 0; List<String> all = new ArrayList<>();
