@@ -13,8 +13,8 @@ public class TestNgClasspathCheck {
     @Test
     public void do2Nothing() {}
 
-    @Test
-    public void doNothing() {}
+//    @Test
+//    public void doNothing() {}
 
     @Test
     public void onlyOneTestNgOnClasspath() throws Exception {
