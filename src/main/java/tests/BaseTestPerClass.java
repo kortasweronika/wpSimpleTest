@@ -11,6 +11,7 @@ import org.testng.annotations.*;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.Map;
 
 public class BaseTestPerClass {
   protected WebDriver driver;
@@ -22,10 +23,10 @@ public class BaseTestPerClass {
     ChromeOptions opt = new ChromeOptions();
     opt.setAcceptInsecureCerts(true);
     opt.addArguments(
-            "--headless=new",
+//            "--headless=new",
             "--disable-gpu",
-            "--no-first-run",
-            "--no-default-browser-check",
+//            "--no-first-run",
+//            "--no-default-browser-check",
             "--ignore-certificate-errors",
             "--allow-insecure-localhost",
             "--disable-features=BlockInsecurePrivateNetworkRequests"
@@ -39,9 +40,21 @@ public class BaseTestPerClass {
             .build();
 
     driver = new ChromeDriver(service, opt);
+    var caps = ((org.openqa.selenium.remote.RemoteWebDriver) driver).getCapabilities();
+    System.out.println("browserVersion = " + caps.getBrowserVersion());
+    System.out.println("chrome = " + caps.getCapability("chrome"));
+    System.out.println("goog:chromeOptions = " + caps.getCapability("goog:chromeOptions"));
     driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
+    Object chromeObj = caps.getCapability("chrome");
+    if (chromeObj instanceof Map<?, ?> map) {
+      System.out.println("chromedriverVersion = " + map.get("chromedriverVersion"));
+      System.out.println("userDataDir = " + map.get("userDataDir"));
+    }
+
     wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     PageFactory.initElements(driver, this);
+
+
   }
 
   @AfterMethod(alwaysRun = true)
