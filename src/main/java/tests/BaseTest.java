@@ -1,14 +1,13 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
-import java.io.File;
 import java.time.Duration;
 
 public class BaseTest {
@@ -17,26 +16,12 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/Users/b2b/Documents/chromedriver-mac-arm64/chromedriver");
-        try {
-            ChromeOptions opts = new ChromeOptions();
-            opts.addArguments("--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check");
+        WebDriverManager.chromedriver().setup();
 
-// (opcjonalnie) jeżeli Chrome nie jest w standardowej lokalizacji
-// opts.setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+        ChromeOptions opts = new ChromeOptions();
+        opts.addArguments("--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check");
 
-            String work = System.getProperty("testfactory.workdir",
-                    System.getProperty("java.io.tmpdir"));
-
-            ChromeDriverService service = new ChromeDriverService.Builder()
-                    .withVerbose(true)
-                    .withLogFile(new File(work, "chromedriver.log"))
-                    .build();
-            driver = new ChromeDriver(service, opts);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        driver = new ChromeDriver(opts);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
