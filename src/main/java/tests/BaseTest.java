@@ -1,6 +1,5 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,8 +15,6 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
-
         ChromeOptions opts = new ChromeOptions();
         opts.addArguments("--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check");
 
