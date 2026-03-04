@@ -19,8 +19,8 @@ import org.apache.commons.io.FileUtils;
 public class RedditSearchTest extends BaseTest {
 
     @Test
-    @Parameters({"query1"})
-    public void searchMultipleQueries(@Optional("Grid") String query1, ITestContext context) {
+    @Parameters({"query2"})
+    public void searchMultipleQueries(@Optional("Grid") String query2, ITestContext context) {
         driver.get("https://vaadin.com");
 
         WebElement docsLink = wait.until(ExpectedConditions.elementToBeClickable(
@@ -39,7 +39,7 @@ public class RedditSearchTest extends BaseTest {
         searchIcon.click();
 
         // Collect search results as JSON
-        List<Map<String, String>> results = performSearchAndCollectResults(query1);
+        List<Map<String, String>> results = performSearchAndCollectResults(query2);
 
         // Store results as JSON in TestNG output
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
