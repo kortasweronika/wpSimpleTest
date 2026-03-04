@@ -20,7 +20,7 @@ public class RedditSearchTest extends BaseTest {
 
     @Test
     @Parameters({"query2"})
-    public void searchMultipleQueries(@Optional("Grid") String query2, ITestContext context) {
+    public void searchMultipleQueries2(@Optional("query2") String query2, ITestContext context) {
         driver.get("https://vaadin.com");
 
         WebElement docsLink = wait.until(ExpectedConditions.elementToBeClickable(
